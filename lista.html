@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <style>
+        .topo {
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            gap: 10px;
+            height: 70px;
+        }
+
+        .tabela {
+            max-width: 500px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            display: flex;
+            justify-content: center;    
+            align-items: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            box-shadow: 0 1px 5px rgb(0, 0, 0); 
+            
+        }
+        thead th {
+            background-color: #e22cd6;
+            color: white; 
+            font-weight: bold;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr{
+            background-color: #c4449c;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #d15aab; 
+        }
+
+        input {
+            padding: 8px 10px;  
+            font-size: 16px;
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            outline: none; 
+        }
+        button {
+            padding: 8px 10px;
+            font-size: 15px;
+            font-family: Arial, sans-serif;
+            color: white;
+            background-color: #e22cd6; 
+            border-radius: 5px;
+            cursor: pointer; 
+        }
+        .lixeira {
+            cursor: pointer;
+            color: red;
+        }
+        tbody tr:hover {
+            background-color: #9b72d6;
+        }
+        body{
+            background-color: #b732c3;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="topo">
+        <div>
+            <input type="text" id="tarefaDescricao" placeholder="Descrição da tarefa">
+        </div>
+        <div>
+            <button id="adicionarLista">Adicionar</button>
+        </div>
+    </div>
+    <div class="tabela">
+        <table>
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th colspan="2">Descrição</th>
+                </tr>
+            </thead>
+            <tbody id="tarefas"></tbody>
+        </table>
+    </div>
+
+    <script>
+        const adicionarLista = document.getElementById('adicionarLista');
+        const tarefaDescricao = document.getElementById('tarefaDescricao');
+        const tarefas = document.getElementById('tarefas');
+        let contador = 1;
+
+        adicionarLista.addEventListener('click', () => {
+            const tarefaTexto = tarefaDescricao.value;
+            if (tarefaTexto) {
+                const novaLinha = document.createElement('tr');
+                novaLinha.innerHTML = `
+                    <td>${contador}</td>
+                    <td>${tarefaTexto}</td>
+                    <td class="lixeira" onclick="removerTarefa(this)">🗑️</td>
+                `;
+                tarefas.appendChild(novaLinha);
+                tarefaDescricao.value = '';
+                contador++;
+            }
+        });
+
+        function removerTarefa(elemento) {
+            elemento.parentElement.remove();
+        }
+    </script>
+</body>
+</html>
